@@ -5,19 +5,23 @@ import {
   View,
   StyleSheet,
   Button,
-  TouchableHighlight,
   Linking,
   Dimensions,
   Alert,
   TouchableOpacity
 } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
+import * as FacebookAds from "expo-ads-facebook";
 
 export default function App() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [data, setData] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
+
+  FacebookAds.AdSettings.addTestDevice(
+    FacebookAds.AdSettings.currentDeviceHash
+  );
 
   useEffect(() => {
     (async () => {
@@ -55,6 +59,11 @@ export default function App() {
         transparent={false}
         visible={modalVisible}
         onRequestClose={() => {
+          FacebookAds.InterstitialAdManager.showAd(
+            "524712804916597_524721524915725"
+          )
+            .then(console.log("Interstitial ad shown"))
+            .catch(err => console.log("Interstitial add Eror", err));
           setScanned(false);
           setModalVisible(false);
         }}
