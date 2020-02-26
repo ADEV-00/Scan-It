@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Component } from "react";
 import {
   Modal,
   Text,
@@ -19,13 +19,12 @@ export default function App() {
   const [data, setData] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
 
-  FacebookAds.AdSettings.addTestDevice(
-    FacebookAds.AdSettings.currentDeviceHash
-  );
-
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
+      FacebookAds.AdSettings.addTestDevice(
+        FacebookAds.AdSettings.currentDeviceHash
+      );
       setHasPermission(status === "granted");
     })();
   }, []);
